@@ -25,7 +25,10 @@
             "assets": ["apps/jamong/src/favicon.ico", "apps/jamong/src/assets"],
             "styles": ["apps/jamong/src/styles.scss"],
             "scripts": [],
-            "es5BrowserSupport": true
+            "es5BrowserSupport": true,
+            "lazyModules": [
+              "apps/jamong/src/app/plugin1/plugin1.module"
+            ]
           },
           "configurations": {
             "production": {
