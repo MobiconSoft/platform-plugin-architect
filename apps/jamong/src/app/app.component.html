@@ -1,8 +1,2 @@
-<div style="text-align:center">
-  <h1>Welcome to jamong!</h1>
-  <img
-    width="450"
-    src="https://raw.githubusercontent.com/nrwl/nx/master/nx-logo.png"
-  />
-</div>
-<div>Message: {{ hello$ | async | json }}</div>
+<button (click)="loadPlugin()">Load plugin</button>
+<lazy-af *ngIf="plugin1Path" [moduleName]="plugin1Path"></lazy-af>

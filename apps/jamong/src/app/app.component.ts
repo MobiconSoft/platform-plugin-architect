@@ -1,13 +1,15 @@
-import { Component } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { Message } from "@jm/api-interface";
+import { Component } from '@angular/core';
 
 @Component({
-  selector: "jm-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.scss"]
+  selector: 'jm-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  hello$ = this.http.get<Message>("/api/hello");
-  constructor(private http: HttpClient) {}
+
+  plugin1Path: string;
+
+  loadPlugin() {
+    this.plugin1Path = 'apps/jamong/src/app/plugin1/plugin1.module#Plugin1Module';
+  }
 }
