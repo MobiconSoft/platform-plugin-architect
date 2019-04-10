@@ -19,6 +19,15 @@
     },
     "api-interface": {
       "tags": []
+    },
+    "plugin2": {
+      "tags": []
+    },
+    "app2": {
+      "tags": []
+    },
+    "app2-e2e": {
+      "tags": []
     }
   }
 }

@@ -1,6 +1,6 @@
 {
-  "/api": {
-    "target": "http://localhost:3333",
+  "/app2": {
+    "target": "http://localhost:4300",
     "secure": false
   }
 }

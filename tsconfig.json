@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@jm/api-interface": ["libs/api-interface/src/index.ts"]
+      "@jm/api-interface": ["libs/api-interface/src/index.ts"],
+      "@jm/plugin2": ["libs/plugin2/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
