@@ -12,6 +12,9 @@ import { Plugin2Component } from './plugin2/plugin2.component';
   ],
   exports: [
     Plugin2Component
+  ],
+  entryComponents: [
+    Plugin2Component
   ]
 })
 export class Plugin2Module {}
