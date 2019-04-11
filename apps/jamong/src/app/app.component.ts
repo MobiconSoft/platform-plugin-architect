@@ -20,6 +20,7 @@ export class AppComponent {
 
   @ViewChild('Plugin', {read: ViewContainerRef}) pluginVcr: ViewContainerRef;
   plugin1Path: string;
+  loadedPlugins: any = {};
 
   constructor(
     private http: HttpClient,
@@ -32,6 +33,16 @@ export class AppComponent {
   }
 
   loadPlugin2() {
+    if (!this.loadedPlugins['api/plugin2']) {
+      this.loadRemoteComponent();
+    } else {
+      const moduleFactory = this.loadedPlugins['api/plugin2'];
+      this.loadComponent(moduleFactory);
+    }
+  }
+
+  private loadRemoteComponent() {
+    let moduleFactory: NgModuleFactory<any>;
     this.http.get('api/plugin2', { responseType: 'text' })
       .pipe(
         catchError(this.handleError)
@@ -44,18 +55,23 @@ export class AppComponent {
           '@angular/router': router,
           'rxjs': rxjs,
           'rxjs/operators': rxjsOperators,
-          // 'ngx-echarts': ngxEcharts
+          'ngx-echarts': ngxEcharts
         };
         const require: any = (module) => modules[module];
         // tslint:disable-next-line: no-eval
         eval(compiledSource);
-        const moduleFactory: NgModuleFactory<any> = exports['Plugin2ModuleNgFactory'];
-        const modRef = moduleFactory.create(this.injector);
-        const componentFactory = modRef.componentFactoryResolver.resolveComponentFactory(this.getEntryComponent(moduleFactory));
-        const component = componentFactory.create(modRef.injector);
-        const cmpRef = this.pluginVcr.createComponent<any>(componentFactory);
-        cmpRef.instance.title = 'LOADED:)';
+        moduleFactory = exports['Plugin2ModuleNgFactory'];
+        this.loadedPlugins['api/plugin2'] = moduleFactory;
+        this.loadComponent(moduleFactory);
       });
+  }
+
+  private loadComponent(moduleFactory: NgModuleFactory<any>) {
+    const modRef = moduleFactory.create(this.injector);
+    const componentFactory = modRef.componentFactoryResolver.resolveComponentFactory(this.getEntryComponent(moduleFactory));
+    const component = componentFactory.create(modRef.injector);
+    const cmpRef = this.pluginVcr.createComponent<any>(componentFactory);
+    cmpRef.instance.title = 'LOADED:)';
   }
 
   private getEntryComponent(moduleFactory: NgModuleFactory<any>) {
