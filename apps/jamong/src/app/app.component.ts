@@ -44,7 +44,7 @@ export class AppComponent {
           '@angular/router': router,
           'rxjs': rxjs,
           'rxjs/operators': rxjsOperators,
-          'ngx-echarts': ngxEcharts
+          // 'ngx-echarts': ngxEcharts
         };
         const require: any = (module) => modules[module];
         // tslint:disable-next-line: no-eval
