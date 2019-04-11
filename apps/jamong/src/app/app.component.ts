@@ -71,7 +71,7 @@ export class AppComponent {
     const componentFactory = modRef.componentFactoryResolver.resolveComponentFactory(this.getEntryComponent(moduleFactory));
     const component = componentFactory.create(modRef.injector);
     const cmpRef = this.pluginVcr.createComponent<any>(componentFactory);
-    cmpRef.instance.title = 'LOADED:)';
+    cmpRef.instance.title = 'LOADED';
   }
 
   private getEntryComponent(moduleFactory: NgModuleFactory<any>) {
