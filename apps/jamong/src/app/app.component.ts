@@ -1,7 +1,8 @@
-import { Component, ViewChild, ViewContainerRef, NgModuleFactory, Injector, NgModuleFactoryLoader } from '@angular/core';
+import { Component, ViewChild, ViewContainerRef, NgModuleFactory, Injector } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { DynamicAFService } from '@herodevs/dynamic-af';
 
 import * as common from '@angular/common';
 import * as commonHttp from '@angular/common/http';
@@ -25,7 +26,7 @@ export class AppComponent {
   constructor(
     private http: HttpClient,
     private injector: Injector,
-    private loader: NgModuleFactoryLoader
+    private lazyService: DynamicAFService
   ) { }
 
   loadPlugin() {
@@ -33,11 +34,11 @@ export class AppComponent {
   }
 
   loadPlugin2() {
-    if (!this.loadedPlugins['api/plugin2']) {
+    const moduleFactory = this.loadedPlugins['api/plugin2'];
+    if (!moduleFactory) {
       this.loadRemoteComponent();
     } else {
-      const moduleFactory = this.loadedPlugins['api/plugin2'];
-      this.loadComponent(moduleFactory);
+      this.lazyService.createAndAttachModuleAsync(moduleFactory, this.injector, { vcr: this.pluginVcr });
     }
   }
 
@@ -62,21 +63,8 @@ export class AppComponent {
         eval(compiledSource);
         moduleFactory = exports['Plugin2ModuleNgFactory'];
         this.loadedPlugins['api/plugin2'] = moduleFactory;
-        this.loadComponent(moduleFactory);
+        this.lazyService.createAndAttachModuleAsync(moduleFactory, this.injector, { vcr: this.pluginVcr});
       });
-  }
-
-  private loadComponent(moduleFactory: NgModuleFactory<any>) {
-    const modRef = moduleFactory.create(this.injector);
-    const componentFactory = modRef.componentFactoryResolver.resolveComponentFactory(this.getEntryComponent(moduleFactory));
-    const component = componentFactory.create(modRef.injector);
-    const cmpRef = this.pluginVcr.createComponent<any>(componentFactory);
-    cmpRef.instance.title = 'LOADED';
-  }
-
-  private getEntryComponent(moduleFactory: NgModuleFactory<any>) {
-    // search (<any>moduleFactory.moduleType).decorators[0].type.prototype.ngMetadataName === NgModule
-    return (<any>moduleFactory.moduleType).decorators[0].args[0].entryComponents[0];
   }
 
   private handleError(error: HttpErrorResponse) {
