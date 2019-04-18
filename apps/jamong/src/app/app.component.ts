@@ -2,7 +2,7 @@ import { Component, ViewChild, ViewContainerRef, NgModuleFactory, Injector } fro
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { DynamicAFService } from '@herodevs/dynamic-af';
+// import { DynamicAFService } from '@herodevs/dynamic-af';
 
 import * as common from '@angular/common';
 import * as commonHttp from '@angular/common/http';
@@ -11,6 +11,7 @@ import * as router from '@angular/router';
 import * as rxjs from 'rxjs';
 import * as rxjsOperators from 'rxjs/operators';
 import * as ngxEcharts from 'ngx-echarts';
+import { DynamicLoaderService } from './dynamic-loader.service';
 
 @Component({
   selector: 'jm-root',
@@ -26,7 +27,7 @@ export class AppComponent {
   constructor(
     private http: HttpClient,
     private injector: Injector,
-    private lazyService: DynamicAFService
+    private lazyService: DynamicLoaderService
   ) { }
 
   loadPlugin() {
