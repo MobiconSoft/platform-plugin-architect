@@ -5,9 +5,10 @@ import { LazyModule } from '@herodevs/lazy-af';
 
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
+import { SafePipe } from './safe.pipe';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, SafePipe],
   imports: [
     BrowserModule,
     HttpClientModule,

@@ -5,3 +5,7 @@
 
 <button (click)="loadPlugin2()">Load plugin2</button>
 <ng-template #Plugin></ng-template>
+
+
+<button (click)="loadPlugin3()">Load plugin2 in iFrame</button>
+<iframe width="600" height="400" [src]="plugin3 | safe"></iframe>

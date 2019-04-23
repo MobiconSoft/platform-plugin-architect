@@ -23,12 +23,14 @@ export class AppComponent {
   @ViewChild('Plugin', {read: ViewContainerRef}) pluginVcr: ViewContainerRef;
   plugin1Path: string;
   loadedPlugins: any = {};
+  plugin3: string = 'http://localhost:4300/index.html';
 
   constructor(
     private http: HttpClient,
     private injector: Injector,
     private lazyService: DynamicLoaderService
-  ) { }
+  ) {
+  }
 
   loadPlugin() {
     this.plugin1Path = 'apps/jamong/src/app/plugin1/plugin1.module#Plugin1Module';
@@ -41,6 +43,10 @@ export class AppComponent {
     } else {
       this.lazyService.createAndAttachModuleAsync(moduleFactory, this.injector, { vcr: this.pluginVcr });
     }
+  }
+
+  loadPlugin3() {
+    this.plugin3 = 'http://localhost:4300/index.html';
   }
 
   private loadRemoteComponent() {
